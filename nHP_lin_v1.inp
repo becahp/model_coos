@@ -1,0 +1,36 @@
+&REGION_INFO spat_dim=3 coor_sys='cart' pnts_max=400000 /
+
+&REGION_DEF reg_mat='OXID' mod_name='SiO2' shape='rect'  low_xyz= 0 	 1e-9 	0 		upp_xyz= 129e-9  26e-9 100e-9 /
+&REGION_DEF reg_mat='OXID' mod_name='HfO2' shape='rect'  low_xyz= 0 	 26e-9 	0 		upp_xyz= 129e-9  66e-9 100e-9 /
+&REGION_DEF reg_mat='CONT' mod_name='conts' shape='rect' low_xyz= 0 	 26e-9 	0 		upp_xyz= 10e-9   46e-9 100e-9 cont_name='S' /
+&REGION_DEF reg_mat='CONT' mod_name='contd' shape='rect' low_xyz= 109e-9 26e-9 	0 		upp_xyz= 129e-9  46e-9 100e-9 cont_name='D' /
+&REGION_DEF reg_mat='CONT' mod_name='vpg' shape='rect'   low_xyz= 15e-9	 31e-9 	0 		upp_xyz= 37e-9   66e-9 100e-9 cont_name='GS' /
+&REGION_DEF reg_mat='CONT' mod_name='VBG' shape='rect'   low_xyz= 0 	 0 		0 		upp_xyz= 129e-9   1e-9 100e-9 cont_name='GB' /
+&REGION_DEF reg_mat='CONT' mod_name='gate' shape='rect'  low_xyz= 57e-9  31e-9	0 		upp_xyz= 79e-9   66e-9 100e-9 cont_name='G' /
+&REGION_DEF reg_mat='SEMI' mod_name='cnt' shape='rect' 	 low_xyz= 10e-9  26e-9	50e-9 	upp_xyz= 109e-9  26e-9 50e-9 /
+
+&RANGE_GRID disc_dir='x' intv_pnts=0 10e-9 15e-9 37e-9 57e-9 79e-9 109e-9 129e-9 intv_diff=1e-9 0.2e-9 0.5e-9 0.5e-9 0.5e-9 0.2e-9 1e-9/
+&RANGE_GRID disc_dir='y' intv_pnts=0 1e-9 21e-9 26e-9 31e-9 46e-9 66e-9 intv_diff=1e-9 1e-9 0.5e-9 1e-9 1e-9 1e-9/
+&RANGE_GRID disc_dir='z' intv_pnts=0 100e-9 intv_diff=10e-9 /
+
+&CONTACT mod_name='conts' sb_type='elec' phi_sb=0.0 schottky_bc='landauer'/
+&CONTACT mod_name='contd' sb_type='elec' phi_sb=0.0 schottky_bc='landauer'/
+&CONTACT mod_name='gate' sb_type='fermi_diff' phi_sb=-0.18 /
+&CONTACT mod_name='vpg' sb_type='fermi_diff' phi_sb=-0.18 /
+&CONTACT mod_name='VBG' sb_type='fermi_diff' phi_sb=0.0 /
+
+&CNT d_cnt=1.4e-09 /
+&SEMI elec=1 hole=1 /
+&BAND_DEF type='mintmire'/
+
+&DD n_iter=100 p_tol=1e-6 damp_init=7e-1 damp_min=1e-1/
+&TUNNEL model='wkb' max_width=60e-9 bbt=1/
+
+&BIAS_DEF dv_max=0.1/
+&BIAS_INFO cont_name='S' bias_fun='LIN' bias_val=0 1.0 11/
+&BIAS_INFO cont_name='D' bias_fun='LIN' bias_val=0 1.0 11/
+&BIAS_INFO cont_name='GB' bias_fun='LIN' bias_val=0 1.0 11/
+&BIAS_INFO cont_name='GS' bias_fun='LIN' bias_val=0 1.0 11/
+&BIAS_INFO cont_name='G' bias_fun='LIN' bias_val=0 1.0 11/
+
+&OUTPUT band_lev=1  elpa_lev=1  inqu_lev= 1 name='nHP_lin_v1'/
