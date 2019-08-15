@@ -1,16 +1,31 @@
 from model_utils import *
 
 input ='input.inp'
-output ='teste.inp'
 
 inFile = open(input,"r")
 contents = inFile.read()
+inFile.close()
 
-#print(contents)
-teste1 = block_bias(0.1)
-teste2 = block_bias(0.2)
-teste3 = block_bias(0.5)
-with open(output,'w') as out:
-    #out.writelines([block_dd, block_bias_g,new_s] )
-    out.writelines([contents] )
-    out.writelines([teste1, teste2, teste3] )
+steps = [0.5, 0.2, 0.1]
+dv_max = steps[2]
+
+path = os.getcwd()
+directory = join(path, str(dv_max))
+
+if not exists(directory):
+    os.makedirs(directory)
+
+list = gen_bias_array(dv_max)
+print(list)
+
+
+for vs in list:
+    for vgb in list:
+        for vgs in list:
+            block_vs = format_number(vs)
+            block_vgb = format_number(vgb)
+            block_vgs = format_number(vgs)
+
+            block = gen_bias_block(dv_max, block_vs, block_vgb, block_vgs)
+            write_file(directory, contents, dv_max, block_vs, block_vgb, block_vgs)
+            print(block)
