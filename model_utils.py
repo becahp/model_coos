@@ -7,7 +7,7 @@ block_bias_def = "&BIAS_DEF dv_max="
 block_bias_d = "&BIAS_INFO cont_name='D' bias_fun='LIN' bias_val=0 1.0 11/ \n"
 block_bias_g = "&BIAS_INFO cont_name='G' bias_fun='LIN' bias_val=0 1.0 11/ \n"
 
-block_out = "&OUTPUT band_lev=0  elpa_lev=1  inqu_lev=0 name="
+block_out = "&OUTPUT band_lev=0  elpa_lev=1  inqu_lev=0 spectrum_lev=0 name="
 barra_final = '/ \n'
 
 block_bias_s = "&BIAS_INFO cont_name='S' bias_fun='TAB' bias_val="
