@@ -15,16 +15,26 @@ block_bias_gb = "&BIAS_INFO cont_name='GB' bias_fun='TAB' bias_val="
 block_bias_gs = "&BIAS_INFO cont_name='GS' bias_fun='TAB' bias_val="
 
 def gen_bias_array(steps):
-	#steps = 0.1, 0.2, 0.5
-	#total = 11, 6, 3
+    """Returns array containing all bias values
+    Expects to receive 0.1, 0.2 or 0.5 as number of steps
+    Calculates bias values from 0.0 to 1.0 based on number of steps
+    But first, it calculates total of values from respect number of steps: 11, 6 or 3
+    """
 	total = 1/steps + 1
 	array = np.linspace(0.0, 1.0, num=total)
 	return array
 
 def format_number(num):
+    """Returns string with number formatted
+    Format is {:0.1f}, so it returns a decimal number with 1 character after the decimal point.
+    Ex: 0.6001 is 0.6
+    """
 	return "{:0.1f}".format(num)
 
 def gen_bias_block(dv_max, vs, vgb, vgs):
+    """Returns bias block to be written
+    Receives the final values of dv_max, source bias (vs), back gate bias (vbg) and gate bias (vgs)
+    """
 	block = '\n'
 	block += block_bias_def + str(dv_max) + barra_final
 	block += block_bias_s + str(vs) + barra_final
@@ -36,6 +46,12 @@ def gen_bias_block(dv_max, vs, vgb, vgs):
 	return block
 
 def write_file(output_path, contents, dv_max, vs, vgb, vgs):
+    """Write the final input file
+    Receives the output path to save the file, the contents (fixed values of the input file)
+    Calls gen_bias_block to create the bias block
+    Creates the output line of the input file
+    Writes everything in one file
+    """	
 	block_bias = gen_bias_block(dv_max, vs, vgb, vgs)
 
 	filename = str(vs) + '_' + str(vgb) + '_' + str(vgs)
