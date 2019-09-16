@@ -31,6 +31,16 @@ def format_number(num):
     """
 	return "{:0.1f}".format(num)
 
+def make_new_dir(output_path, name):
+	"""Creates a new folder under given path to store files
+	Expects output path and name of new folder
+	"""
+	path = join(output_path, name)
+	if not exists(path):
+	    os.makedirs(path)
+
+	return path
+
 def gen_bias_block(dv_max, vs, vgb, vgs):
     """Returns bias block to be written
     Receives the final values of dv_max, source bias (vs), back gate bias (vbg) and gate bias (vgs)
